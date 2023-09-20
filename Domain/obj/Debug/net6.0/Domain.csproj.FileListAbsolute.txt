@@ -1,0 +1,12 @@
+C:\DIGITAL INSTITUTE\Domain\bin\Debug\net6.0\Domain.deps.json
+C:\DIGITAL INSTITUTE\Domain\bin\Debug\net6.0\Domain.dll
+C:\DIGITAL INSTITUTE\Domain\bin\Debug\net6.0\Domain.pdb
+C:\DIGITAL INSTITUTE\Domain\obj\Debug\net6.0\Domain.csproj.AssemblyReference.cache
+C:\DIGITAL INSTITUTE\Domain\obj\Debug\net6.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\DIGITAL INSTITUTE\Domain\obj\Debug\net6.0\Domain.AssemblyInfoInputs.cache
+C:\DIGITAL INSTITUTE\Domain\obj\Debug\net6.0\Domain.AssemblyInfo.cs
+C:\DIGITAL INSTITUTE\Domain\obj\Debug\net6.0\Domain.csproj.CoreCompileInputs.cache
+C:\DIGITAL INSTITUTE\Domain\obj\Debug\net6.0\Domain.dll
+C:\DIGITAL INSTITUTE\Domain\obj\Debug\net6.0\refint\Domain.dll
+C:\DIGITAL INSTITUTE\Domain\obj\Debug\net6.0\Domain.pdb
+C:\DIGITAL INSTITUTE\Domain\obj\Debug\net6.0\ref\Domain.dll
