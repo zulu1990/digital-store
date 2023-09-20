@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\DIGITAL INSTITUTE\\Infrastructure\\Infrastructure.csproj": {}
+    "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Infrastructure\\Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\DIGITAL INSTITUTE\\Application\\Application.csproj": {
+    "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\DIGITAL INSTITUTE\\Application\\Application.csproj",
+        "projectUniqueName": "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "C:\\DIGITAL INSTITUTE\\Application\\Application.csproj",
+        "projectPath": "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Application\\Application.csproj",
         "packagesPath": "C:\\Users\\Archili_Zivzivadze\\.nuget\\packages\\",
-        "outputPath": "C:\\DIGITAL INSTITUTE\\Application\\obj\\",
+        "outputPath": "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -31,8 +31,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\DIGITAL INSTITUTE\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\DIGITAL INSTITUTE\\Domain\\Domain.csproj"
+              "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Domain\\Domain.csproj"
               }
             }
           }
@@ -84,14 +84,14 @@
         }
       }
     },
-    "C:\\DIGITAL INSTITUTE\\Domain\\Domain.csproj": {
+    "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\DIGITAL INSTITUTE\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\DIGITAL INSTITUTE\\Domain\\Domain.csproj",
+        "projectPath": "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\Archili_Zivzivadze\\.nuget\\packages\\",
-        "outputPath": "C:\\DIGITAL INSTITUTE\\Domain\\obj\\",
+        "outputPath": "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -148,14 +148,14 @@
         }
       }
     },
-    "C:\\DIGITAL INSTITUTE\\Infrastructure\\Infrastructure.csproj": {
+    "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\DIGITAL INSTITUTE\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\DIGITAL INSTITUTE\\Infrastructure\\Infrastructure.csproj",
+        "projectPath": "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Infrastructure\\Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Archili_Zivzivadze\\.nuget\\packages\\",
-        "outputPath": "C:\\DIGITAL INSTITUTE\\Infrastructure\\obj\\",
+        "outputPath": "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -175,11 +175,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\DIGITAL INSTITUTE\\Application\\Application.csproj": {
-                "projectPath": "C:\\DIGITAL INSTITUTE\\Application\\Application.csproj"
+              "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Application\\Application.csproj": {
+                "projectPath": "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Application\\Application.csproj"
               },
-              "C:\\DIGITAL INSTITUTE\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\DIGITAL INSTITUTE\\Domain\\Domain.csproj"
+              "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Domain\\Domain.csproj"
               }
             }
           }

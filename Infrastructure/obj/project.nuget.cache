@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wIRiEBfes4G5GC0RdIpzEm5tQW88yMk6OZhCH/tgED4aJqs0v/8OjOoP+cQR0jrRsRoy6BLCLoEMYSTD/WNXvA==",
+  "dgSpecHash": "pBnl5wzk5ZkrFzvQkF8Vx6knzKUNcjAE+XhgWrALytFWF5xwCLwmVyNwYoB/shma3H6et5g+h+bbYsYb+vEvMA==",
   "success": true,
-  "projectFilePath": "C:\\DIGITAL INSTITUTE\\Infrastructure\\Infrastructure.csproj",
+  "projectFilePath": "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Infrastructure\\Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Archili_Zivzivadze\\.nuget\\packages\\fluentvalidation\\11.7.1\\fluentvalidation.11.7.1.nupkg.sha512",
     "C:\\Users\\Archili_Zivzivadze\\.nuget\\packages\\mediatr\\11.1.0\\mediatr.11.1.0.nupkg.sha512",

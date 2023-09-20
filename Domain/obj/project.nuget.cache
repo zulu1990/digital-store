@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8Uh+NZMBRMKgPNyBvJhOXzln6I3DGBSLGn4iNfOp9N1FBGJIUUSIhJ1LbycO3cVy0oknzycSuWES+cZvPM2qNA==",
+  "dgSpecHash": "QJejIXFJAkX1+/aUgUFP5yoS8dbhdxlsZSiZ1JEHpWAi62n2OTXNqYhfE103Jm+W6EH2Fd7bKHbY/oWMJkGryA==",
   "success": true,
-  "projectFilePath": "C:\\DIGITAL INSTITUTE\\Domain\\Domain.csproj",
+  "projectFilePath": "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Domain\\Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Archili_Zivzivadze\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Archili_Zivzivadze\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",

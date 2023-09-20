@@ -211,11 +211,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\DIGITAL INSTITUTE\\Domain\\Domain.csproj",
+      "projectUniqueName": "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Domain\\Domain.csproj",
       "projectName": "Domain",
-      "projectPath": "C:\\DIGITAL INSTITUTE\\Domain\\Domain.csproj",
+      "projectPath": "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Domain\\Domain.csproj",
       "packagesPath": "C:\\Users\\Archili_Zivzivadze\\.nuget\\packages\\",
-      "outputPath": "C:\\DIGITAL INSTITUTE\\Domain\\obj\\",
+      "outputPath": "C:\\DIGITAL INSTITUTE\\DigitalInstituteStore\\Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
