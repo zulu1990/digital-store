@@ -1,6 +1,7 @@
 using Application;
 using Infrastructure;
 using Infrastructure.Common;
+using OnlineStore.Extensions;
 
 internal class Program
 {
@@ -12,12 +13,9 @@ internal class Program
         builder.Logging.ClearProviders();
         builder.Logging.AddConsole();
 
-        builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
 
         builder.Services
+            .AddUI()
             .AddApplicationLayer()
             .AddInfrastructure(builder.Configuration);
 

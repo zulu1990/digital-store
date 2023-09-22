@@ -40,6 +40,7 @@ namespace Application.Authorization.Commands
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 Email = request.Email,
+                Orders = new List<Order>()
             };
 
             var user = await _userRepository.AddAsync(newUser);

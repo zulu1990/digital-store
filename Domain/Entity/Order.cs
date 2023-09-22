@@ -15,6 +15,7 @@ namespace Domain.Entity
        
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public bool IsCompleted { get;set; }
 
         public Order()
         {

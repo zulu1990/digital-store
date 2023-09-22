@@ -1,4 +1,5 @@
-﻿using Domain.Entity;
+﻿using Domain;
+using Domain.Entity;
 using Domain.Enum;
 using System.Drawing;
 
@@ -22,38 +23,49 @@ namespace Infrastructure.Persistance.Mocking
         void SeedProducts()
         {
             // Mobile Phone
-            var mob = new Product
+            for (int i = 0; i < 50; i++)
             {
-                Id = Guid.NewGuid(),
-                Name = "Samsung S22+",
-                Category = ProductCategory.Electronic,
-                Price = 1453,
-                ReminingCount = 35
-            };
-            Products.Add(mob.Id, mob);
+                var mob = new Product
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Samsung S22+",
+                    Category = ProductCategory.Electronic,
+                    Price = 1453,
+                    ProductIdentifier = ProductIdentifier.SamsungS22
+                };
+                Products.Add(mob.Id, mob);
+            }
+
 
             // PS5
-            var ps = new Product
+            for (int i = 0; i < 29; i++)
             {
-                Id = Guid.NewGuid(),
-                Category = ProductCategory.Electronic,
-                Name = "Playstation 5",
-                Price = 1111,
-                ReminingCount = 20
-            };
-            Products.Add(ps.Id, ps);
+                var ps = new Product
+                {
+                    Id = Guid.NewGuid(),
+                    Category = ProductCategory.Electronic,
+                    Name = "Playstation 5",
+                    Price = 1111,
+                    ProductIdentifier = ProductIdentifier.Playstation5
+                };
+                Products.Add(ps.Id, ps);
+            }
+
 
             // Ball
-
-            var ball = new Product
+            for (int i = 0; i< 129; i++)
             {
-                Id = Guid.NewGuid(),
-                ReminingCount = 3123,
-                Price = 14,
-                Name = "Football Ball",
-                Category = ProductCategory.Sport
-            };
-            Products.Add(ball.Id, ball);
+                var ball = new Product
+                {
+                    Id = Guid.NewGuid(),
+                    ProductIdentifier = ProductIdentifier.FootballBall,
+                    Price = 14,
+                    Name = "Football Ball",
+                    Category = ProductCategory.Sport
+                };
+                Products.Add(ball.Id, ball);
+            }
+
         }
 
     }

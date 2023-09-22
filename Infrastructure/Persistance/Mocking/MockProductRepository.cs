@@ -69,8 +69,14 @@ namespace Infrastructure.Persistance.Mocking
         public async Task<IList<Product>> ListAsync(Expression<Func<Product, bool>> expression, string includes = null, bool trackChanges = false, Func<IQueryable<Product>, IOrderedQueryable<Product>> orderBy = null, int count = 0)
         {
             await Task.CompletedTask;
-
-            return _dbSet.Values.AsQueryable().Where(expression).ToList();
+            if (count > 0)
+            {
+                return _dbSet.Values.AsQueryable().Where(expression).Take(count).ToList();
+            }
+            else
+            {
+                return _dbSet.Values.AsQueryable().Where(expression).ToList();
+            }
         }
 
         public Result<Product> Update(Product entity)

@@ -8,8 +8,7 @@ namespace Application.Orders.Models
 {
     public class AddProductToOrderModel
     {
-        public Guid UserId { get; set; }
-        public Guid ProductId { get; set; }
+        public int ProductIdentifier { get; set; }
         public int Count { get; set; }
     }
 }

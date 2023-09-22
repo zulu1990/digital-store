@@ -43,9 +43,10 @@ namespace Infrastructure.Persistance.Mocking
             return Result.Fail("Couldn't Delete", StatusCodes.Status400BadRequest);
         }
 
-        public Task<Order> GetByExpressionAsync(Expression<Func<Order, bool>> expression, string includes = null, bool trackChanges = false)
+        public async Task<Order> GetByExpressionAsync(Expression<Func<Order, bool>> expression, string includes = null, bool trackChanges = false)
         {
-            throw new NotImplementedException();
+            await Task.CompletedTask;
+            return _dbSet.Values.AsQueryable().Where(expression).FirstOrDefault();
         }
 
         public async Task<Result<Order>> GetByIdAsync(Guid id)
@@ -65,7 +66,15 @@ namespace Infrastructure.Persistance.Mocking
 
         public Result<Order> Update(Order entity)
         {
-            throw new NotImplementedException();
+            if(_dbSet.TryGetValue(entity.Id, out var oldValue))
+            {
+                oldValue.StartDate= oldValue.StartDate;
+                oldValue.EndDate= oldValue.EndDate;
+                oldValue.Products = entity.Products;
+                return Result<Order>.Succeed(oldValue);
+            }
+
+            return Result<Order>.Fail("Something went wrong");
         }
     }
 }

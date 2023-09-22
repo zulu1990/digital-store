@@ -14,5 +14,9 @@ namespace Domain.Entity
 
         public decimal Balance { get; set; }
 
+
+
+        public ICollection<Order> Orders { get; set; }
+
     }
 }

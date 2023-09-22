@@ -58,6 +58,7 @@ namespace Infrastructure
         {
 #if MOCKING
             services.AddSingleton<MockDb>();
+            services.AddScoped<IGenericRepository<Order>, MockOrderRepository>();
             services.AddScoped<IGenericRepository<User>, MockUserRepository>();
             services.AddScoped<IGenericRepository<Product>, MockProductRepository>();
             services.AddScoped<IUnitOfWork, MockUnitOfWork>();

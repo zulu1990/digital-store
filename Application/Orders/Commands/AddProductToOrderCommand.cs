@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.Orders.Commands
 {
-    public record AddProductToOrderCommand(Guid UserId, Guid ProductId, int Count) : IRequest<Result<Order>>;
+    public record AddProductToOrderCommand(Guid UserId, int ProductIdentifier, int Count) : IRequest<Result<Order>>;
 
 
 
@@ -28,39 +28,46 @@ namespace Application.Orders.Commands
 
         public async Task<Result<Order>> Handle(AddProductToOrderCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepo.GetByIdAsync(request.UserId);
-
+            var userResult = await _userRepo.GetByIdAsync(request.UserId);
+            var user = userResult.Value;
             //TODO
             //check if user exists
 
             var order = await _orderRepo.GetByExpressionAsync(x => x.UserId == request.UserId, includes: "Products");
-            var productResult = await _productRepo.GetByIdAsync(request.ProductId);
+            var needsToAdd = order is null;
 
-            var product = productResult.Value;
+            var products = await _productRepo.ListAsync(
+                p => p.ProductIdentifier == request.ProductIdentifier
+                && p.OrderId == null && p.Sold == false
+            , count: request.Count);
 
-            if (order is null)
-            {
-                order = new Order()
+
+            order ??= new Order()
                 {
+                    Id = Guid.NewGuid(),
                     UserId = request.UserId
                 };
 
+
+            foreach (var product in products)
+            {
+                product.OrderId = order.Id;
                 order.Products.Add(product);
+            }
+
+            user.Orders.Add(order);
+            _userRepo.Update(user);
+
+
+            if(needsToAdd)
+            {
+                await _orderRepo.AddAsync(order);
             }
             else
             {
-                var existingProduct = order.Products.FirstOrDefault(x => x.Id == request.ProductId);
-
-                if (existingProduct != null)
-                {
-                    existingProduct.ReminingCount += request.Count;
-                }
-                else
-                {
-                    order.Products.Add(product);
-                }
+                _orderRepo.Update(order);
             }
-
+            await _unitOfWork.CommitAsync();
             return Result<Order>.Succeed(order);
         }
     }

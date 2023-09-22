@@ -9,10 +9,15 @@ namespace Domain.Entity
 {
     public class Product : BaseEntity
     {
+
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public int ReminingCount { get; set; }
-        public ProductCategory Category { get; set; }
 
+        public ProductCategory Category { get; set; }
+        public int ProductIdentifier { get; set; }
+
+        public Guid? OrderId { get; set; }
+
+        public bool Sold { get; set; }
     }
 }
