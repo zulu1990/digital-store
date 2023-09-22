@@ -407,3 +407,6 @@ obj/
 ../**/bin
 bin/
 */bin
+
+**/bin/*
+**/obj/*
