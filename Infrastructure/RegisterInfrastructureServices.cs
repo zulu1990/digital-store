@@ -11,6 +11,9 @@ using Infrastructure.Persistance;
 using Infrastructure.Common;
 using Infrastructure.Persistance.Mocking;
 using Domain.Entity;
+using Application.Services;
+using Infrastructure.Services;
+using Application.Services.Models;
 
 namespace Infrastructure
 {
@@ -19,6 +22,12 @@ namespace Infrastructure
         public static IServiceCollection AddInfrastructure(this  IServiceCollection services, IConfiguration config)
         {
             services.AddTransient<ExceptionHandlingMiddleware>();
+
+            services.AddMemoryCache();
+            services.AddSingleton<ICacheService, InMemoryCache>();
+            services.AddSingleton<IExchangeRate, ExchangeRates>();
+
+            services.Configure<ExchangeRateConfig>(config.GetSection("ExchangeService"));
 
             services.AddAuth(config)
                 .AddPersistance(config);
@@ -66,7 +75,6 @@ namespace Infrastructure
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 #endif
-
             return services;
         }
     }
