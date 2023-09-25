@@ -1,4 +1,5 @@
 ﻿using Application.Common.Persistance;
+using Application.Services;
 using Domain;
 using Domain.Entity;
 using MediatR;
@@ -16,15 +17,19 @@ namespace Application.Orders.Commands
         private readonly IGenericRepository<Order> _ordersRepo;
         private readonly IGenericRepository<Product> _productsRepo;
         private readonly IGenericRepository<User> _usersRepo;
+        private readonly IExchangeRate _exchangeService;
+
         private readonly IUnitOfWork _unitOfWork;
 
 
-        public CheckoutOrderCommandHander(IGenericRepository<Order> ordersRepo, IGenericRepository<Product> productsRepo, IGenericRepository<User> usersRepo, IUnitOfWork unitOfWork)
+        public CheckoutOrderCommandHander(IGenericRepository<Order> ordersRepo, IGenericRepository<Product> productsRepo, 
+            IGenericRepository<User> usersRepo, IUnitOfWork unitOfWork, IExchangeRate exchangeService)
         {
             _ordersRepo = ordersRepo;
             _productsRepo = productsRepo;
             _usersRepo = usersRepo;
             _unitOfWork = unitOfWork;
+            _exchangeService = exchangeService;
         }
 
         public async Task<Result<Order>> Handle(CheckoutOrderCommand request, CancellationToken cancellationToken)
@@ -38,8 +43,10 @@ namespace Application.Orders.Commands
 
 
             var totalSum = ongoingOrder.Products.Sum(x => x.Price);
+            var rates = await _exchangeService.GetExchangeRates(user.Currency);
+            var totalSumConverted = totalSum * rates.conversion_rates.USD;
 
-            if( user.Balance < totalSum )
+            if( user.Balance < totalSumConverted)
                 return Result<Order>.Fail("NotEnoughBalance");
 
 

@@ -28,8 +28,8 @@ namespace Infrastructure.Services
             {
                 options ??= new MemoryCacheEntryOptions()
                 {
-                    AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(25),
-                    SlidingExpiration = TimeSpan.FromSeconds(10),
+                    AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(25),
+                    SlidingExpiration = TimeSpan.FromMinutes(10),
                     Priority = CacheItemPriority.Normal,
                     Size = 55
                 };

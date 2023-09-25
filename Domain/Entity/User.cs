@@ -14,7 +14,7 @@ namespace Domain.Entity
 
         public decimal Balance { get; set; }
 
-
+        public string Currency { get; set; } = "EUR";
 
         public ICollection<Order> Orders { get; set; }
 

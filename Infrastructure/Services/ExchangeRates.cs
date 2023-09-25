@@ -1,9 +1,7 @@
 ﻿using Application.Services;
 using Application.Services.Models;
-using Microsoft.Extensions.Configuration;
+using Flurl.Http;
 using Microsoft.Extensions.Options;
-using System.Net;
-using System.Net.Http.Json;
 
 namespace Infrastructure.Services
 {
@@ -28,12 +26,7 @@ namespace Infrastructure.Services
             {
                 var url = string.Concat(_config.BaseUrl, _config.ApiKey, _config.Param, currency);
 
-                using var httpClient = new HttpClient();
-
-                data = await httpClient.GetFromJsonAsync<ExchangeRateResponse>(url);
-
-                
-
+                data = await url.GetJsonAsync<ExchangeRateResponse>();
                 _cacheService.SetData(currency, data);
             }
 

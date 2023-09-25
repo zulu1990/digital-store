@@ -1,55 +1,94 @@
 ﻿using Application.Common.Persistance;
 using Domain;
 using Domain.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Persistance
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
-        public Task<T> AddAsync(T value)
+        private readonly DbSet<T> _dbSet;
+
+        public GenericRepository(ApplicationDbContext context)
         {
-            throw new NotImplementedException();
+            _dbSet = context.Set<T>();
         }
 
-        public Task AddRangeAsync(IEnumerable<T> values)
+
+        public async Task<T> AddAsync(T value)
         {
-            throw new NotImplementedException();
+            var entity = await _dbSet.AddAsync(value);
+            return entity.Entity;
+        }
+
+        public async Task AddRangeAsync(IEnumerable<T> values)
+        {
+            await _dbSet.AddRangeAsync(values);
         }
 
         public Result DeleteEntitiy(T entity)
         {
-            throw new NotImplementedException();
+            _ = _dbSet.Remove(entity);
+            return Result.Succeed();
         }
 
-        public Task<Result> DeleteEntityById(Guid id)
+        public async Task<Result> DeleteEntityById(Guid id)
         {
-            throw new NotImplementedException();
+            var entity = await _dbSet.FindAsync(id);
+
+            if (entity != null)
+                return DeleteEntitiy(entity);
+
+            return Result.Fail("Not Found", StatusCodes.Status404NotFound);
         }
 
-        public Task<T> GetByExpressionAsync(Expression<Func<T, bool>> expression, string includes = null, bool trackChanges = false)
+        public async Task<T> GetByExpressionAsync(Expression<Func<T, bool>> expression, string includes = null, bool trackChanges = false)
         {
-            throw new NotImplementedException();
+            IQueryable<T> query = _dbSet;
+            var includesList = includes?.Split(", ");
+            if (includesList is not null)
+                query = includesList.Aggregate(query, (current, includesList) => current.Include(includesList));
+
+            var item = trackChanges ? await query.FirstOrDefaultAsync(expression) : await query.AsNoTracking().FirstOrDefaultAsync(expression);
+
+            return item;
         }
 
-        public Task<Result<T>> GetByIdAsync(Guid id)
+        public async Task<Result<T>> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var result = await _dbSet.FindAsync(id);
+
+            return Result<T>.Succeed(result);
         }
 
-        public Task<IList<T>> ListAsync(Expression<Func<T, bool>> expression, string includes = null, bool trackChanges = false, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, int count = 0)
+        public async Task<IList<T>> ListAsync(Expression<Func<T, bool>> expression = null, string includes = null, bool trackChanges = false, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, int count = 0)
         {
-            throw new NotImplementedException();
+            IQueryable<T> query = _dbSet;
+
+            var includesList = includes?.Split(", ");
+            if(includesList is not null)
+                query = includesList.Aggregate(query, (current, includesList) => current.Include(includesList));   
+            
+            if(expression is not null)
+                query = query.Where(expression);
+
+            if (orderBy is not null)
+                query = orderBy(query);
+
+            if (count > 0)
+                query = query.Take(count);
+
+            var result = trackChanges ? await query.ToListAsync() : await query.AsNoTracking().ToListAsync();
+
+            return result;
         }
 
         public Result<T> Update(T entity)
         {
-            throw new NotImplementedException();
+            var result = _dbSet.Update(entity);
+            return Result<T>.Succeed(entity);
         }
     }
 }

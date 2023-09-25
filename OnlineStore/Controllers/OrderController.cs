@@ -42,6 +42,16 @@ namespace OnlineStore.Controllers
         }
 
 
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> CheckoutOrder()
+        {
+            var userId = HttpContext.GetUserId();
+            var checkoutOrderCommand = new CheckoutOrderCommand(userId);
 
+            var result = await _mediator.Send(checkoutOrderCommand);
+
+            return Ok(result);
+        }
     }
 }
