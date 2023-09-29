@@ -13,20 +13,13 @@ namespace OnlineStore.Controllers
         private readonly IConfiguration _configuration;
         public AdminController(ISender mediator, IConfiguration configuration) : base(mediator)
         {
-            _configuration = configuration;
         }
 
 
-
-        //[Authorize]
+        [AdminFilter]
         [HttpPost("add-product")]
         public async Task<IActionResult> AddProduct(AddProductModel model)
         {
-            await Task.CompletedTask;
-
-            if (model.AdminSecret != _configuration.GetSection("AdminPanel:Secret").Value)
-                return BadRequest("Wrong Secret Key");
-
             var addCommand = new AddProductCommand(model.Name, model.Price, model.Category, model.ProductIdentifier, model.Count);
 
             var result = await _mediator.Send(addCommand);
@@ -34,10 +27,12 @@ namespace OnlineStore.Controllers
             return Ok(result);
         }
 
-        [HttpGet("get-user-orders")]
-        public async Task<IActionResult> GetUserOrders(Guid userId)
+
+        [AdminFilter]
+        [HttpPost("get-user-orders")]
+        public async Task<IActionResult> GetUserOrders(GetUserOrderModel model)
         {
-            var getUserOrdersQuery = new GetUserOrderQuery(userId);
+            var getUserOrdersQuery = new GetUserOrderQuery(model.UserId);
 
             var result = await _mediator.Send(getUserOrdersQuery);
 

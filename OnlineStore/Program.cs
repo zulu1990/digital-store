@@ -1,6 +1,7 @@
 using Application;
 using Infrastructure;
 using Infrastructure.Common;
+using Infrastructure.Persistance;
 using OnlineStore.Extensions;
 
 internal class Program
@@ -20,6 +21,15 @@ internal class Program
             .AddInfrastructure(builder.Configuration);
 
         var app = builder.Build();
+
+        using(var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            var context = services.GetRequiredService<ApplicationDbContext>();
+
+            SeedData.SeedProducts(context);
+        }
+
 
         app.UseMiddleware<ExceptionHandlingMiddleware>();
 

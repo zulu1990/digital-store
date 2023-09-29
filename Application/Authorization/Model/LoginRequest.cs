@@ -16,7 +16,7 @@ namespace Application.Authorization.Model
 
 
         [Required]
-        [MinLength(15)]
+        [MinLength(8)]
         public string Password { get; set; }
     }
 }

@@ -10,15 +10,14 @@ namespace Infrastructure.Persistance
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private bool _disposed;
-        private ApplicationDbContext _context;
-        private readonly Func<ApplicationDbContext> _contextFactory;
+        private ApplicationDbContext _dbContext;
+        private readonly Func<ApplicationDbContext> _instanceFactory;
 
-        public ApplicationDbContext DbContext => _context ??= _contextFactory.Invoke();
+        public ApplicationDbContext DbContext => _dbContext ??= _instanceFactory.Invoke();
 
-        public UnitOfWork(Func<ApplicationDbContext> contextFactory)
+        public UnitOfWork(Func<ApplicationDbContext> dbContextFactory)
         {
-            _contextFactory = contextFactory;
-
+            _instanceFactory = dbContextFactory;
         }
 
         public async Task<bool> CommitAsync()
@@ -28,10 +27,10 @@ namespace Infrastructure.Persistance
 
         public void Dispose()
         {
-            if(_disposed == false && _context != null)
+            if (_disposed == false && _dbContext != null)
             {
-                _context.Dispose();
                 _disposed = true;
+                _dbContext.Dispose();
                 GC.SuppressFinalize(this);
             }
         }

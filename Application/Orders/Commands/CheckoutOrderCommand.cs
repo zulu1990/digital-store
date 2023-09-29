@@ -41,8 +41,10 @@ namespace Application.Orders.Commands
             //TODO
             // check ongoingOrder exists
 
+            var orderFromDb = await _ordersRepo.GetByExpressionAsync(x => x.Id == ongoingOrder.Id, includes: "Products");
 
-            var totalSum = ongoingOrder.Products.Sum(x => x.Price);
+
+            var totalSum = orderFromDb.Products.Sum(x => x.Price);
             var rates = await _exchangeService.GetExchangeRates(user.Currency);
             var totalSumConverted = totalSum * rates.conversion_rates.USD;
 
@@ -52,12 +54,12 @@ namespace Application.Orders.Commands
 
             user.Balance -= totalSum;
 
-            ongoingOrder.Products.ToList().ForEach(x => x.Sold = true);
-            ongoingOrder.IsCompleted = true;
+            orderFromDb.Products.ToList().ForEach(x => x.Sold = true);
+            orderFromDb.IsCompleted = true;
 
             await _unitOfWork.CommitAsync();
 
-            return Result<Order>.Succeed(ongoingOrder);
+            return Result<Order>.Succeed(orderFromDb);
         }
     }
 }

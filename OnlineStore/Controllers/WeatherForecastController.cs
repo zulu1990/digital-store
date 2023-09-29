@@ -21,6 +21,9 @@ namespace OnlineStore.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public async Task<IActionResult> Get(string currency)
         {
+
+            _logger.LogInformation("SASDADSAD");
+
             var json = await _exchangeRate.GetExchangeRates(currency);
 
             //var getWeatherQuery = new GetWeatherQuery();

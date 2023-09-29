@@ -28,8 +28,8 @@ namespace Application.Orders.Commands
 
         public async Task<Result<Order>> Handle(AddProductToOrderCommand request, CancellationToken cancellationToken)
         {
-            var userResult = await _userRepo.GetByIdAsync(request.UserId);
-            var user = userResult.Value;
+            //var user = await _userRepo.GetByExpressionAsync(x=> x.Id == request.UserId, includes: "Orders");
+
             //TODO
             //check if user exists
 
@@ -44,7 +44,6 @@ namespace Application.Orders.Commands
 
             order ??= new Order()
                 {
-                    Id = Guid.NewGuid(),
                     UserId = request.UserId
                 };
 
@@ -55,8 +54,8 @@ namespace Application.Orders.Commands
                 order.Products.Add(product);
             }
 
-            user.Orders.Add(order);
-            _userRepo.Update(user);
+           // user.Orders.Add(order);
+           // _userRepo.Update(user);
 
 
             if(needsToAdd)
