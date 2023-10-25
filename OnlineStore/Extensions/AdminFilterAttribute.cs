@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace OnlineStore.Extensions
 {
@@ -13,12 +14,14 @@ namespace OnlineStore.Extensions
             var secret = config.GetSection("AdminPanel:Secret").Value;
             var model = context.ActionArguments.Values.FirstOrDefault();
 
-            if(model != null)
+            object properyValue = null;
+
+            if (model != null)
             {
                 var propertyInfo = model.GetType().GetProperty("AdminSecret");
-                if(propertyInfo != null)
+                if (propertyInfo != null)
                 {
-                    var properyValue = propertyInfo.GetValue(model);
+                    properyValue = propertyInfo.GetValue(model);
 
                     if (properyValue != null && properyValue.ToString() == secret)
                     {
@@ -26,9 +29,11 @@ namespace OnlineStore.Extensions
                         return;
                     }
                 }
-               
-            }
 
+            }
+            var loggerFactory = context.HttpContext.RequestServices.GetService<ILoggerFactory>();
+            var logger = loggerFactory.CreateLogger<AdminFilterAttribute>();
+            logger.LogError($"Invalid input model, actual {properyValue} expecting:{secret}");
 
             context.Result = new BadRequestObjectResult("Invalid input model");
         }

@@ -8,7 +8,8 @@ namespace OnlineStore.Controllers
     public class WeatherForecastController : BaseController
     {
         private readonly IExchangeRate _exchangeRate;
-        public WeatherForecastController(ISender mediator, IExchangeRate exchangeRate) : base(mediator)
+        public WeatherForecastController(ISender mediator, IExchangeRate exchangeRate, ILoggerFactory loggerFactory) 
+            : base(mediator, loggerFactory)
         {
             _exchangeRate = exchangeRate;
         }
@@ -21,15 +22,15 @@ namespace OnlineStore.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public async Task<IActionResult> Get(string currency)
         {
+            _logger.LogInformation($"Logging from {nameof(Get)}");
 
-            _logger.LogInformation("SASDADSAD");
-
-            var json = await _exchangeRate.GetExchangeRates(currency);
+            throw new Exception("Testing exception");
+            //var json = await _exchangeRate.GetExchangeRates(currency);
 
             //var getWeatherQuery = new GetWeatherQuery();
             //var result = await _mediator.Send(getWeatherQuery);
 
-            return Ok(json);
+            return Ok();
 
         }
     }

@@ -8,12 +8,12 @@ namespace OnlineStore.Controllers
     public class BaseController : ControllerBase
     {
         internal readonly ISender _mediator;
-        //internal readonly ILogger _logger;
+        internal readonly ILogger _logger;
 
-        public BaseController(ISender mediator/*, ILogger logger*/)
+        public BaseController(ISender mediator, ILoggerFactory loggerFactory)
         {
             _mediator = mediator;
-            //_logger = logger;
+            _logger = loggerFactory.CreateLogger(GetType().Name);
         }
     }
 }

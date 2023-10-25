@@ -1,9 +1,5 @@
 ﻿using Domain.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.AdminPanel.Models
 {
@@ -14,6 +10,7 @@ namespace Application.AdminPanel.Models
 
         public ProductCategory Category { get; set; }
         public int ProductIdentifier { get; set; }
+        public IFormFile Image { get;set; }
 
         public int Count {  get; set; }
     }

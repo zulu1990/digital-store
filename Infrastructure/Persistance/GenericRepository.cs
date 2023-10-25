@@ -3,6 +3,7 @@ using Domain;
 using Domain.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Persistance
@@ -44,7 +45,7 @@ namespace Infrastructure.Persistance
             return Result.Fail("Not Found", StatusCodes.Status404NotFound);
         }
 
-        public async Task<T> GetByExpressionAsync(Expression<Func<T, bool>> expression, string includes = null, bool trackChanges = false)
+        public async Task<T> GetByExpressionAsync(Expression<Func<T, bool>> expression, string includes = null, bool trackChanges = true)
         {
             IQueryable<T> query = _dbSet;
             var includesList = includes?.Split(", ");
@@ -56,17 +57,16 @@ namespace Infrastructure.Persistance
             return item;
         }
 
-        public async Task<Result<T>> GetByIdAsync(Guid id)
+        public async Task<T> GetByIdAsync(Guid id)
         {
-            var result = await _dbSet.FindAsync(id);
-
-            return Result<T>.Succeed(result);
+            return await _dbSet.FindAsync(id);
         }
 
-        public async Task<IList<T>> ListAsync(Expression<Func<T, bool>> expression = null, string includes = null, bool trackChanges = false, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, int count = 0)
+        public async Task<IList<T>> ListAsync(Expression<Func<T, bool>> expression = null, string includes = null,
+            bool trackChanges = true, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            string distinctBy = null, int count = 0)
         {
             IQueryable<T> query = _dbSet;
-
             var includesList = includes?.Split(", ");
             if(includesList is not null)
                 query = includesList.Aggregate(query, (current, includesList) => current.Include(includesList));   

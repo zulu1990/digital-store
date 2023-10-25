@@ -9,7 +9,7 @@ namespace OnlineStore.Controllers
 {
     public class OrderController : BaseController
     {
-        public OrderController(ISender mediator) : base(mediator)
+        public OrderController(ISender mediator, ILoggerFactory loggerFactory) : base(mediator, loggerFactory)
         {
         }
 
@@ -44,10 +44,11 @@ namespace OnlineStore.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> CheckoutOrder()
+        public async Task<IActionResult> CheckoutOrder(CheckoutRequestModel model)
         {
             var userId = HttpContext.GetUserId();
-            var checkoutOrderCommand = new CheckoutOrderCommand(userId);
+
+            var checkoutOrderCommand = new CheckoutOrderCommand(userId, model.Delivery, model.Address);
 
             var result = await _mediator.Send(checkoutOrderCommand);
 

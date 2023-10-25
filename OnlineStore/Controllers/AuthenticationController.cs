@@ -1,14 +1,18 @@
 ﻿using Application.Authorization.Commands;
+using Application.Authorization.Commands.Passwords;
 using Application.Authorization.Model;
 using Application.Authorization.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using OnlineStore.Extensions;
 
 namespace OnlineStore.Controllers
 {
     public class AuthenticationController : BaseController
     {
-        public AuthenticationController(ISender mediator/*, ILogger logger*/) : base(mediator/*, logger*/) { }
+        public AuthenticationController(ISender mediator, ILoggerFactory loggerFactory) : base(mediator, loggerFactory) { }
 
 
         [HttpPost("Register")]
@@ -17,6 +21,8 @@ namespace OnlineStore.Controllers
         public async Task<IActionResult> Register(RegisterRequest request)
         {
             var command = new RegisterUserCommand(request.Email, request.Password);
+
+
 
             var result = await _mediator.Send(command);
 
@@ -42,5 +48,54 @@ namespace OnlineStore.Controllers
                 return Problem(result.Message);
         }
 
+
+        [HttpGet("verify")]
+        public async Task<IActionResult> Verify(string email, Guid verificationCode)
+        {
+            var command = new VerifyUserEmailCommand(email, verificationCode);
+
+            var result = await _mediator.Send(command);
+            if (result.Success)
+                return Ok();
+
+            return BadRequest();
+        }
+
+
+        [HttpPost("forget-password")]
+        public async Task<IActionResult> ForgetPassword(ForgetPasswordRequest forgetPassword)
+        {
+            var command = new ForgotPasswordCommand(forgetPassword.Email);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+
+        [HttpPost("reset-passsord")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordRequest resetPassword)
+        {
+            var command = new ResetPasswordCommand(resetPassword.Email, resetPassword.Password, resetPassword.Token);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+
+
+        [Authorize]
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordRequest request)
+        {
+            var userId = HttpContext.GetUserId();
+
+            var command = new ChangePasswordCommand(userId, request.OldPassword, request.NewPassword);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
     }
 }

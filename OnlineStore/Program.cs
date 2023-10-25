@@ -3,6 +3,7 @@ using Infrastructure;
 using Infrastructure.Common;
 using Infrastructure.Persistance;
 using OnlineStore.Extensions;
+using Serilog;
 
 internal class Program
 {
@@ -10,10 +11,16 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        var logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(builder.Configuration)
+            .Enrich.FromLogContext()
+            .Enrich.WithThreadId()
+            .CreateLogger();
+
         // Add services to the container.
         builder.Logging.ClearProviders();
         builder.Logging.AddConsole();
-
+        builder.Logging.AddSerilog(logger);
 
         builder.Services
             .AddUI()

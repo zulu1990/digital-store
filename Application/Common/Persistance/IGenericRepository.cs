@@ -17,12 +17,13 @@ namespace Application.Common.Persistance
         Result DeleteEntitiy(T entity);
         Task<Result> DeleteEntityById(Guid id);
         Result<T> Update(T entity);
-        Task<Result<T>> GetByIdAsync(Guid id);
+        Task<T> GetByIdAsync(Guid id);
 
         Task<T> GetByExpressionAsync(Expression<Func<T, bool>> expression = null, string includes = null, bool trackChanges = true);
 
         Task<IList<T>> ListAsync(Expression<Func<T, bool>> expression = null, string includes = null,
-            bool trackChanges = true, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, int count = 0);
+            bool trackChanges = true, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            string distinctBy = null, int count = 0);
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,14 @@ namespace Domain.Entity
         public string Currency { get; set; } = "EUR";
 
         public ICollection<Order> Orders { get; set; }
+
+        public Guid VerificationCode { get; set; }
+        public bool EmailVerified { get; set; }
+
+        public string Address { get; set; }
+
+
+        public Role Role { get; set; }
 
     }
 }

@@ -59,7 +59,13 @@ namespace Infrastructure.Persistance.Mocking
             return Result<Order>.Fail("Not Found");
         }
 
-        public Task<IList<Order>> ListAsync(Expression<Func<Order, bool>> expression, string includes = null, bool trackChanges = false, Func<IQueryable<Order>, IOrderedQueryable<Order>> orderBy = null, int count = 0)
+        public Task<IList<Order>> ListAsync(Expression<Func<Order, bool>> expression, string includes = null, bool trackChanges = false, 
+            Func<IQueryable<Order>, IOrderedQueryable<Order>> orderBy = null, Type distinctBy = null, int count = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IList<Order>> ListAsync(Expression<Func<Order, bool>> expression = null, string includes = null, bool trackChanges = true, Func<IQueryable<Order>, IOrderedQueryable<Order>> orderBy = null, string distinctBy = null, int count = 0)
         {
             throw new NotImplementedException();
         }
@@ -75,6 +81,11 @@ namespace Infrastructure.Persistance.Mocking
             }
 
             return Result<Order>.Fail("Something went wrong");
+        }
+
+        Task<Order> IGenericRepository<Order>.GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

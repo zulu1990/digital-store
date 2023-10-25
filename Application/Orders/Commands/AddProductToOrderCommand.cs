@@ -28,12 +28,7 @@ namespace Application.Orders.Commands
 
         public async Task<Result<Order>> Handle(AddProductToOrderCommand request, CancellationToken cancellationToken)
         {
-            //var user = await _userRepo.GetByExpressionAsync(x=> x.Id == request.UserId, includes: "Orders");
-
-            //TODO
-            //check if user exists
-
-            var order = await _orderRepo.GetByExpressionAsync(x => x.UserId == request.UserId, includes: "Products");
+            var order = await _orderRepo.GetByExpressionAsync(x => x.UserId == request.UserId && x.IsCompleted == false, includes: "Products");
             var needsToAdd = order is null;
 
             var products = await _productRepo.ListAsync(

@@ -15,6 +15,9 @@ using Application.Services;
 using Infrastructure.Services;
 using Application.Services.Models;
 using Microsoft.EntityFrameworkCore;
+using Application.Common.Services;
+using Infrastructure.Common.Services;
+using Infrastructure.Services.ImageUpload;
 
 namespace Infrastructure
 {
@@ -31,7 +34,9 @@ namespace Infrastructure
             services.Configure<ExchangeRateConfig>(config.GetSection("ExchangeService"));
 
             services.AddAuth(config)
-                .AddPersistance(config);
+                .AddPersistance(config)
+                .AddEmailSender(config)
+                .AddImageUploader(config);
 
             return services;
         }
@@ -83,6 +88,24 @@ namespace Infrastructure
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 #endif
+            return services;
+        }
+
+
+        private static IServiceCollection AddEmailSender(this IServiceCollection services, IConfiguration config)
+        {
+            services.AddSingleton<IEmailSender, GmailSender>();
+
+            services.Configure<SMTPSettings>(config.GetSection("SmtpServer"));
+
+            return services;
+        }
+
+        private static IServiceCollection AddImageUploader(this IServiceCollection services, IConfiguration config)
+        {
+            services.AddScoped<IImageService, CloudinaryService>();
+            services.Configure<CloudinarySettings>(config.GetSection("ImageService"));
+
             return services;
         }
     }

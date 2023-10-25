@@ -33,13 +33,16 @@ namespace Application.Orders.Commands
         public async Task<Result<Order>> Handle(RemoveProductFromOrderCommand request, CancellationToken cancellationToken)
         {
             var user = await _userRepo.GetByExpressionAsync(x=> x.Id == request.UserId, includes: "Orders");
+
             var ongoingOrder = user.Orders.FirstOrDefault(o => o.IsCompleted == false);
 
-
+            var orderFromDb = await _orderRepo.GetByExpressionAsync(x => x.Id == ongoingOrder.Id, includes: "Products");
+            
+            
             if (ongoingOrder == null) 
                 return Result<Order>.Fail("Ongoing Order Not Found");
 
-            var productsFromOrder = ongoingOrder.Products.Where(x => x.ProductIdentifier == request.ProductIdentifier);
+            var productsFromOrder = orderFromDb.Products.Where(x => x.ProductIdentifier == request.ProductIdentifier).ToList();
             
             if(productsFromOrder.Count() < request.Count)
                 return Result<Order>.Fail("Error due was not enough product in order");
@@ -51,7 +54,7 @@ namespace Application.Orders.Commands
                 ongoingOrder.Products.Remove(productsToRemove[i]);
                 productsToRemove[i].OrderId = null;
             }
-
+            await _unitOfWork.CommitAsync();
 
             return Result<Order>.Succeed(ongoingOrder);
         }

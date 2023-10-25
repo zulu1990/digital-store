@@ -66,7 +66,8 @@ namespace Infrastructure.Persistance.Mocking
             return Result<Product>.Fail("Not Found", StatusCodes.Status404NotFound);
         }
 
-        public async Task<IList<Product>> ListAsync(Expression<Func<Product, bool>> expression, string includes = null, bool trackChanges = false, Func<IQueryable<Product>, IOrderedQueryable<Product>> orderBy = null, int count = 0)
+        public async Task<IList<Product>> ListAsync(Expression<Func<Product, bool>> expression, string includes = null, bool trackChanges = false,
+            Func<IQueryable<Product>, IOrderedQueryable<Product>> orderBy = null, Type distinctBy = null, int count = 0)
         {
             await Task.CompletedTask;
             if (count > 0)
@@ -79,7 +80,17 @@ namespace Infrastructure.Persistance.Mocking
             }
         }
 
+        public Task<IList<Product>> ListAsync(Expression<Func<Product, bool>> expression = null, string includes = null, bool trackChanges = true, Func<IQueryable<Product>, IOrderedQueryable<Product>> orderBy = null, string distinctBy = null, int count = 0)
+        {
+            throw new NotImplementedException();
+        }
+
         public Result<Product> Update(Product entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Product> IGenericRepository<Product>.GetByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }

@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStore", "OnlineStore.csproj", "{05A89230-7EAF-4AB8-98D8-A7C6C06A3D8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStore", "OnlineStore.csproj", "{05A89230-7EAF-4AB8-98D8-A7C6C06A3D8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "..\Domain\Domain.csproj", "{1BAF3455-2DF2-47E8-AAF9-DC50CB00F86B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "..\Domain\Domain.csproj", "{1BAF3455-2DF2-47E8-AAF9-DC50CB00F86B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "..\Application\Application.csproj", "{7C5342AA-4D00-4799-BEDA-5388DC4EB345}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "..\Application\Application.csproj", "{7C5342AA-4D00-4799-BEDA-5388DC4EB345}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "..\Infrastructure\Infrastructure.csproj", "{8C831508-08B2-4980-8598-81520D17EDAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "..\Infrastructure\Infrastructure.csproj", "{8C831508-08B2-4980-8598-81520D17EDAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreTests", "..\StoreTests\StoreTests.csproj", "{D0164569-829E-4B24-821C-99466D51A434}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{8C831508-08B2-4980-8598-81520D17EDAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C831508-08B2-4980-8598-81520D17EDAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C831508-08B2-4980-8598-81520D17EDAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0164569-829E-4B24-821C-99466D51A434}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0164569-829E-4B24-821C-99466D51A434}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0164569-829E-4B24-821C-99466D51A434}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0164569-829E-4B24-821C-99466D51A434}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,17 +1,14 @@
 ﻿using Application.Common.Persistance;
+using Application.Services;
 using Domain;
 using Domain.Entity;
 using Domain.Enum;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.AdminPanel.Commands
 {
-    public record AddProductCommand(string Name, decimal Price,
+    public record AddProductCommand(string Name, decimal Price, IFormFile Image,
         ProductCategory Category, int ProductIdentifier, int Count) : IRequest<Result>;
 
 
@@ -19,12 +16,17 @@ namespace Application.AdminPanel.Commands
     internal class AddProductCommandHander : IRequestHandler<AddProductCommand, Result>
     {
         private readonly IGenericRepository<Product> _productRepository;
+        private readonly IGenericRepository<Photo> _photoRepository;
+        private readonly IImageService _imageService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public AddProductCommandHander(IGenericRepository<Product> productRepository, IUnitOfWork unitOfWork)
+        public AddProductCommandHander(IGenericRepository<Product> productRepository, IUnitOfWork unitOfWork,
+            IGenericRepository<Photo> photoRepository, IImageService imageService)
         {
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
+            _photoRepository = photoRepository;
+            _imageService = imageService;
         }
 
         public async Task<Result> Handle(AddProductCommand request, CancellationToken cancellationToken)
@@ -44,6 +46,16 @@ namespace Application.AdminPanel.Commands
                 await _productRepository.AddAsync(product);
             }
 
+            var photoUpload = await _imageService.UploadImage(request.Image);
+
+            var photo = new Photo
+            {
+                ProductIdentifier = request.ProductIdentifier,
+                PublicId = photoUpload.PublicId,
+                Url = photoUpload.Url,
+            };
+
+            await _photoRepository.AddAsync(photo);
             await _unitOfWork.CommitAsync();
 
             return Result.Succeed();

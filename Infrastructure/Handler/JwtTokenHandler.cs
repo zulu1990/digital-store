@@ -24,7 +24,8 @@ namespace Infrastructure.Handler
         {
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Role, user.Role.ToString())
             };
 
             var keyAsByte = Encoding.UTF8.GetBytes(_config.GetSection("Secrets:JwtToken").Value);

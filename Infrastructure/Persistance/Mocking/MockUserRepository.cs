@@ -66,10 +66,16 @@ namespace Infrastructure.Persistance.Mocking
             return Result<User>.Fail("Not Found", StatusCodes.Status404NotFound);
         }
 
-        public async Task<IList<User>> ListAsync(Expression<Func<User, bool>> expression, string includes = null, bool trackChanges = false, Func<IQueryable<User>, IOrderedQueryable<User>> orderBy = null, int count = 0)
+        public async Task<IList<User>> ListAsync(Expression<Func<User, bool>> expression, string includes = null, bool trackChanges = false, 
+            Func<IQueryable<User>, IOrderedQueryable<User>> orderBy = null, Type distinctBy = null, int count = 0)
         {
             await Task.CompletedTask;
             return _dbSet.Values.AsQueryable().Where(expression).ToList();
+        }
+
+        public Task<IList<User>> ListAsync(Expression<Func<User, bool>> expression = null, string includes = null, bool trackChanges = true, Func<IQueryable<User>, IOrderedQueryable<User>> orderBy = null, string distinctBy = null, int count = 0)
+        {
+            throw new NotImplementedException();
         }
 
         public Result<User> Update(User entity)
@@ -81,6 +87,11 @@ namespace Infrastructure.Persistance.Mocking
                 result.Email = entity.Email;
             }
             return Result<User>.Succeed(entity);
+        }
+
+        Task<User> IGenericRepository<User>.GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

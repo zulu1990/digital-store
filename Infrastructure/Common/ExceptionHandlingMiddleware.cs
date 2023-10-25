@@ -1,18 +1,18 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Infrastructure.Common
 {
     public sealed class ExceptionHandlingMiddleware : IMiddleware
     {
+        private readonly ILogger _logger;
 
+        public ExceptionHandlingMiddleware(ILoggerFactory loggerFactory)
+        {
+            _logger = loggerFactory.CreateLogger<ExceptionHandlingMiddleware>();
+        }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
@@ -23,6 +23,9 @@ namespace Infrastructure.Common
             catch (Exception ex)
             {
                 await HandleException(context, ex);
+
+                _logger.LogError($"exception happened: {ex.Message}");
+
             }
         }
 
@@ -38,7 +41,7 @@ namespace Infrastructure.Common
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = statusCode;
-            await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
         }
 
 

@@ -19,7 +19,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Comments\Queries\" />
     <Folder Include="Products\Commands\" />
   </ItemGroup>
 
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>StoreTests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+	
 </Project>
