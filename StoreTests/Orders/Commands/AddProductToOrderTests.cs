@@ -2,6 +2,7 @@
 using Application.Orders.Commands;
 using Domain;
 using Domain.Entity;
+using Domain.Exceptions;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -109,6 +110,30 @@ namespace StoreTests.Orders.Commands
             Assert.True(actual.Success);
             Assert.Equal(actual.Value.Products.Count, count + 1);
             Assert.False(actual.Value.IsCompleted);
+
+        }
+
+        [Fact]
+        public async Task AddPRoductToOrder_Should_Throw_UserIsBannedExcepion_When_User_Is_Banned()
+        {
+            //Arrange
+            var count = 2;
+            var productIdentifier = 1;
+            _userRepoMock.Setup(x => x.GetByIdAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(new User
+                {
+                    Ban = true
+                });
+
+            var command = new AddProductToOrderCommand(_userId, productIdentifier, count);
+
+
+            var handler = new AddProductToOrderCommandHander(_orderRepoMock.Object, _productRepoMock.Object,
+                _userRepoMock.Object, _unitOfWorkMock.Object);
+
+            //Act
+            //Assert
+            await Assert.ThrowsAsync<UserIsBannedException>(() => handler.Handle(command, default));
 
         }
     }

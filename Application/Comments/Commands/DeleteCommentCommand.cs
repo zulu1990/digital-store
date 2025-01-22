@@ -2,6 +2,7 @@
 using Domain;
 using Domain.Entity;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,9 @@ namespace Application.Comments.Commands
                 throw new UnauthorizedAccessException();
 
             var comment = await _commentRepository.GetByIdAsync(request.CommentId);
+            if (comment is null)
+                return Result.Fail(ErrorMessages.CommentNotFound, StatusCodes.Status404NotFound);
+
 
             if(comment.UserId != request.UserId)
                 throw new UnauthorizedAccessException();

@@ -28,9 +28,7 @@ namespace Infrastructure.Services.ImageUpload
 
         public async Task<UploadImageResult> UploadImage(IFormFile file)
         {
-            var result = new ImageUploadResult();
-
-            if(file.Length > 0)
+            if (file.Length > 0)
             {
                 using var stream = file.OpenReadStream();
                 var uploadParams = new ImageUploadParams
@@ -38,10 +36,12 @@ namespace Infrastructure.Services.ImageUpload
                     File = new FileDescription(file.Name, stream)
                 };
 
-                result = await cloudinary.UploadAsync(uploadParams);
+                var result = await cloudinary.UploadAsync(uploadParams);
+
+                return new UploadImageResult() { PublicId = result.PublicId, Url = result.Url.ToString() };
             }
 
-            return new UploadImageResult() { PublicId = result.PublicId, Url = result.Url.ToString() };
+            throw new FileNotFoundException();
         }
     }
 }

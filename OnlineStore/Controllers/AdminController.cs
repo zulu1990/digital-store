@@ -54,5 +54,29 @@ namespace OnlineStore.Controllers
             return Ok(result);
         }
 
+
+
+        [AdminFilter]
+        [HttpPost("ban-user")]
+        public async Task<IActionResult> BanUser(UserBanModel model)
+        {
+            var command = new BanUserCommand(model.UserId, model.Reason);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+        [AdminFilter]
+        [HttpPost("unban-user")]
+        public async Task<IActionResult> UnBanUser(UserBanModel model)
+        {
+            var command = new UnBanUserCommand(model.UserId);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
     }
 }

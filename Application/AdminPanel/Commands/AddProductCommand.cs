@@ -31,6 +31,10 @@ namespace Application.AdminPanel.Commands
 
         public async Task<Result> Handle(AddProductCommand request, CancellationToken cancellationToken)
         {
+            if (request.Price < 0)
+                return Result.Fail(ErrorMessages.NegativePriceDetected, StatusCodes.Status403Forbidden);
+
+
             for(int i = 0; i< request.Count; i++)
             {
                 var product = new Product

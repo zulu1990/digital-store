@@ -1,6 +1,7 @@
 ﻿using Application.Common.Persistance;
 using Domain;
 using Domain.Entity;
+using Domain.Exceptions;
 using MediatR;
 
 namespace Application.Orders.Commands
@@ -28,6 +29,11 @@ namespace Application.Orders.Commands
 
         public async Task<Result<Order>> Handle(AddProductToOrderCommand request, CancellationToken cancellationToken)
         {
+            var user = await _userRepo.GetByIdAsync(request.UserId);
+
+            if (user.Ban)
+                throw new UserIsBannedException();
+
             var order = await _orderRepo.GetByExpressionAsync(x => x.UserId == request.UserId && x.IsCompleted == false, includes: "Products");
             var needsToAdd = order is null;
 

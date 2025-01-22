@@ -3,12 +3,15 @@ using Domain;
 using Domain.Entity;
 using Domain.Exceptions;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Comments.Commands
 {
-    public record AddCommentToProductCommand(Guid UserId, string? Message, int? Rating, int ProductIdentifier) : IRequest<Result>;
+    public record AddCommentToProductCommand(
+        Guid UserId, string? Message, 
+        int? Rating, int ProductIdentifier) : IRequest<Result<Comment>>;
 
-    public class AddCommentToProductCommandHandler : IRequestHandler<AddCommentToProductCommand, Result>
+    public class AddCommentToProductCommandHandler : IRequestHandler<AddCommentToProductCommand, Result<Comment>>
     {
         private readonly IGenericRepository<Comment> _commentRepository;
         private readonly IGenericRepository<Product> _productRepository;
@@ -22,8 +25,14 @@ namespace Application.Comments.Commands
             _productRepository = productRepository;
         }
 
-        public async Task<Result> Handle(AddCommentToProductCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Comment>> Handle(AddCommentToProductCommand request, CancellationToken cancellationToken)
         {
+            if (string.IsNullOrWhiteSpace(request.Message) && request.Rating == null)
+                return Result<Comment>.Fail(
+                    ErrorMessages.IncorrectCommentParameters, 
+                    StatusCodes.Status403Forbidden);
+
+
             var product = await _productRepository.GetByExpressionAsync(x => x.ProductIdentifier == request.ProductIdentifier, trackChanges: false);
 
             if (product is null)
@@ -41,7 +50,7 @@ namespace Application.Comments.Commands
 
             await _unitOfWork.CommitAsync();
 
-            return Result.Succeed();
+            return Result<Comment>.Succeed(comment);
         }
     }
 

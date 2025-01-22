@@ -33,6 +33,9 @@ namespace Application.Authorization.Commands.Passwords
         {
             var user = await _userRepository.GetByIdAsync(request.UserId);
 
+            if (user is null)
+                throw new UserNotFoundException(ErrorMessages.UserNotFound);
+
             if (_passwordHander.ValidatePassword(request.OldPassword, user.PasswordHash, user.PasswordSalt) == false)
                 throw new IncorrectPasswordException();
 

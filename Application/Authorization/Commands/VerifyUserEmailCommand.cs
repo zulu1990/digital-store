@@ -1,6 +1,7 @@
 ﻿using Application.Common.Persistance;
 using Domain;
 using Domain.Entity;
+using Domain.Exceptions;
 using MediatR;
 
 namespace Application.Authorization.Commands
@@ -25,7 +26,7 @@ namespace Application.Authorization.Commands
 
             if (user == null)
             {
-                throw new ArgumentException();
+                throw new UserNotFoundException(ErrorMessages.UserNotFound);
             }
 
             if(user.VerificationCode == request.VerificationCode)
@@ -35,7 +36,7 @@ namespace Application.Authorization.Commands
                 return Result.Succeed();
             }
 
-            return Result.Fail("Code was incorrect");
+            return Result.Fail(ErrorMessages.IncorrectCode);
         }
     }
 

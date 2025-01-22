@@ -26,7 +26,7 @@ namespace OnlineStore.Controllers
             _logger.LogDebug($"GetAllProducts for user :{userId}");
 
             var result = await _mediator.Send(new GetAllProductsQuery(userId));
-            return Ok(result);
+            return Ok(result.Value);
         }
 
 
@@ -41,7 +41,7 @@ namespace OnlineStore.Controllers
 
             var result = await _mediator.Send(query);
 
-            return Ok(result);
+            return Ok(result.Value);
         }
 
 

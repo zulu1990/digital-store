@@ -26,6 +26,7 @@ namespace Domain.Entity
 
 
         public Role Role { get; set; }
-
+        public bool Ban { get; set; }
+        public string BanReason { get; set; }
     }
 }

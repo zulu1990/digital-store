@@ -42,6 +42,9 @@ namespace Application.Orders.Commands
         {
             var user = await _usersRepo.GetByExpressionAsync(x=> x.Id == request.UserId, includes: "Orders");
 
+            if (user.Ban)
+                throw new UserIsBannedException();
+
             if (user.EmailVerified == false)
                 throw new EmailNotVerifiedException("Please verify email before checkout");
 

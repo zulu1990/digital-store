@@ -28,7 +28,7 @@ namespace Application.Authorization.Commands.Passwords
             var user = await _userRepository.GetByExpressionAsync(x=> x.Email == request.Email);
 
             if (user == null)
-                throw new UserNotFoundException($"{request.Email} user was not found");
+                throw new UserNotFoundException(ErrorMessages.UserNotFound);
             
             if(user.VerificationCode == request.Token)
             {

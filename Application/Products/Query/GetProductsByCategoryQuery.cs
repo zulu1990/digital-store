@@ -30,6 +30,9 @@ namespace Application.Products.Query
         {
             var product = await _productRepo.GetByExpressionAsync(x=> x.ProductIdentifier == request.ProductIdentifier, trackChanges: false);
 
+            if (product is null)
+                return Result<ProductDto>.Fail("Product Not Found", 404);
+
             var photo = await _photoRepo.GetByExpressionAsync(x => x.ProductIdentifier == request.ProductIdentifier, trackChanges: false);
 
             var comments = await _commentRepo.ListAsync(x => x.ProductIdentifier == product.ProductIdentifier, trackChanges: false);
@@ -43,6 +46,7 @@ namespace Application.Products.Query
                     Message = comment.Message,
                     Rating = comment.Rating
                 };
+
                 if (comment.UserId != Guid.Empty)
                 {
                     var user = await _userRepo.GetByExpressionAsync(x => x.Id == comment.UserId, trackChanges: false);
@@ -51,7 +55,7 @@ namespace Application.Products.Query
                 commentsDtos.Add(commentDto);
             }
 
-            var averageRating = commentsDtos.Sum(x => x.Rating) / (double)comments.Count;
+            var averageRating = comments.Count == 0? 0 : commentsDtos.Sum(x => x.Rating) / (double)comments.Count;
 
             var result = new ProductDto
             {

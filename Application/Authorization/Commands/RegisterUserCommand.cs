@@ -34,7 +34,7 @@ namespace Application.Authorization.Commands
             var existingUser = await _userRepository.GetByExpressionAsync(x=> x.Email == request.Email);
 
             if (existingUser is not null)
-                return Result<string>.Fail("User Already Exists", StatusCodes.Status400BadRequest);
+                return Result<string>.Fail(ErrorMessages.UserAlreadyExist, StatusCodes.Status400BadRequest);
 
             _passwordHander.CreateSaltAndHash(request.Password, out var passwordHash, out var passwordSalt);
 

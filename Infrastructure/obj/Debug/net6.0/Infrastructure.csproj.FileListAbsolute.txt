@@ -27,10 +27,11 @@ C:\DIGITAL INSTITUTE\DigitalInstituteStore\Infrastructure\obj\Debug\net6.0\Infra
 C:\DIGITAL INSTITUTE\DigitalInstituteStore\Infrastructure\obj\Debug\net6.0\Infrastructure.AssemblyInfoInputs.cache
 C:\DIGITAL INSTITUTE\DigitalInstituteStore\Infrastructure\obj\Debug\net6.0\Infrastructure.AssemblyInfo.cs
 C:\DIGITAL INSTITUTE\DigitalInstituteStore\Infrastructure\obj\Debug\net6.0\Infrastructure.csproj.CoreCompileInputs.cache
-C:\DIGITAL INSTITUTE\DigitalInstituteStore\Infrastructure\obj\Debug\net6.0\Infrastructure.csproj.CopyComplete
 C:\DIGITAL INSTITUTE\DigitalInstituteStore\Infrastructure\obj\Debug\net6.0\Infrastructure.dll
 C:\DIGITAL INSTITUTE\DigitalInstituteStore\Infrastructure\obj\Debug\net6.0\refint\Infrastructure.dll
 C:\DIGITAL INSTITUTE\DigitalInstituteStore\Infrastructure\obj\Debug\net6.0\Infrastructure.pdb
 C:\DIGITAL INSTITUTE\DigitalInstituteStore\Infrastructure\obj\Debug\net6.0\ref\Infrastructure.dll
 C:\DIGITAL INSTITUTE\DigitalInstituteStore\Infrastructure\bin\Debug\net6.0\Infrastructure.runtimeconfig.json
 C:\DIGITAL INSTITUTE\DigitalInstituteStore\Infrastructure\obj\Debug\net6.0\Infrastructure.genruntimeconfig.cache
+C:\DIGITAL INSTITUTE\DigitalInstituteStore\Infrastructure\obj\Debug\net6.0\Infrastructure.sourcelink.json
+C:\DIGITAL INSTITUTE\DigitalInstituteStore\Infrastructure\obj\Debug\net6.0\Infrastr.15EFFBFE.Up2Date

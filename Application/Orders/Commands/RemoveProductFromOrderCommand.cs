@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Common.Persistance;
+using Domain.Exceptions;
 
 namespace Application.Orders.Commands
 {
@@ -34,14 +35,18 @@ namespace Application.Orders.Commands
         {
             var user = await _userRepo.GetByExpressionAsync(x=> x.Id == request.UserId, includes: "Orders");
 
+            if (user is null)
+                throw new UserNotFoundException("User Not Found");
+
+
             var ongoingOrder = user.Orders.FirstOrDefault(o => o.IsCompleted == false);
+
+            if (ongoingOrder == null)
+                return Result<Order>.Fail("Ongoing Order Not Found", 404);
+
 
             var orderFromDb = await _orderRepo.GetByExpressionAsync(x => x.Id == ongoingOrder.Id, includes: "Products");
             
-            
-            if (ongoingOrder == null) 
-                return Result<Order>.Fail("Ongoing Order Not Found");
-
             var productsFromOrder = orderFromDb.Products.Where(x => x.ProductIdentifier == request.ProductIdentifier).ToList();
             
             if(productsFromOrder.Count() < request.Count)

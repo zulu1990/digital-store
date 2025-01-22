@@ -73,6 +73,28 @@ namespace StoreTests.Orders.Commands
 
 
         [Fact]
+        public async Task ChekoutOrderCommand_Should_Throw_UserIsBannedExcepion_When_User_Is_Banned()
+        {
+            var command = new CheckoutOrderCommand(_userId, false, "asd");
+
+            _userRepoMock.Setup(x => x.GetByExpressionAsync(
+                It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<string>(), It.IsAny<bool>())).ReturnsAsync(new User
+                {
+                    EmailVerified = false,
+                    Ban = true
+                });
+
+            var handler = new CheckoutOrderCommandHander(_orderRepoMock.Object, _productRepoMock.Object,
+                _userRepoMock.Object, _unitOfWorkMock.Object, _exchangeServiceMock.Object,
+                _mailSenderMock.Object, _photoRepoMock.Object);
+
+            await Assert.ThrowsAsync<UserIsBannedException>(async () =>
+            {
+                await handler.Handle(command, default);
+            });
+        }
+
+        [Fact]
         public async Task ChekoutOrderCommand_Should_Throw_OrderNotFoundException()
         {
             var command = new CheckoutOrderCommand(_userId, false, "asd");
